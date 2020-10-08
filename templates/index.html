@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="app">
+    <el-row>
+        <el-col :span="8">
+            <el-form v-model="form" label-width="80px">
+                <el-form-item label="密码">
+                    <el-input v-model="form.password"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="newAccount">创建用户</el-button>
+                </el-form-item>
+            </el-form>
+            <el-form v-model="form" label-width="80px">
+                <el-form-item label="源用户">
+                    <el-input v-model="form.source"></el-input>
+                </el-form-item>
+                <el-form-item label="目标用户">
+                    <el-input v-model="form.dist"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="tran">交易</el-button>
+                </el-form-item>
+            </el-form>
+        </el-col>
+        <el-col :span="8">
+            <div class="grid-content bg-purple-light"></div>
+        </el-col>
+        <el-col :span="8">
+            <div class="grid-content bg-purple"></div>
+        </el-col>
+    </el-row>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            form: {
+                password: ""
+            }
+        },
+        methods: {
+            newAccount: function () {
+                var that = this
+                axios.post('/', {
+                    password: this.form.password,
+                })
+                    .then(function (response) {
+                        that.$alert(response, '完成', {});
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            tran: function () {
+                var that = this
+                axios.post('/tarn/', {
+                    source: this.form.source,
+                    dist: this.form.dist,
+                })
+                    .then(function (response) {
+                        that.$alert(response, '完成', {});
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        }
+    })
+
+</script>
+</html>
